@@ -1,4 +1,9 @@
-export function getMetricMetaInfo (metric) {
+import React from 'react'
+import { View } from 'react-native'
+import { FontAweSome, MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons'
+import { white } from './colors'
+
+/*export function getMetricMetaInfo (metric) {
     const info = {
         run: {
             displayName: 'Run',
@@ -95,7 +100,7 @@ export function getMetricMetaInfo (metric) {
     return typeof metric === 'undefined'
         ? info
         : info[metric]
-}
+}*/
 
 export function isBetween (num, x, y) {
     if (num >= x && num <= y) {
@@ -137,4 +142,108 @@ export function timeToString (time = Date.now()) {
     const date = new Date(time)
     const todayUTC = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()))
     return todayUTC.toISOString().split('T')[0]
+}
+
+export function getMetricMetaInfo(metric){
+    const info = {
+        run : {
+          displayName: 'Run',
+          max: 50,
+          unit: 'miles',
+          steps : 1,
+          type : 'steppers',
+          getIcons(){
+             return (
+                 <View>
+                     <MaterialIcons
+                        name='direction-run'
+                        color={'black'}
+                        size = {35}
+                     />
+                 </View>
+             )
+         }
+        },
+
+        bike : {
+            displayName: 'Bike',
+            max: 100,
+            unit: 'miles',
+            steps : 1,
+            type : 'steppers',
+            getIcons(){
+                return (
+                    <View>
+                        <MaterialCommunityIcons
+                            name='bike'
+                            color={'black'}
+                            size = {35}
+                        />
+                    </View>
+                )
+            }
+        },
+
+        swim:  {
+            displayName: 'Swim',
+            max: 9900,
+            unit: 'meters',
+            steps : 100,
+            type : 'steppers',
+            getIcons(){
+                return (
+                    <View>
+                        <MaterialCommunityIcons
+                            name='swim'
+                            color={'black'}
+                            size = {35}
+                        />
+                    </View>
+                )
+            }
+        },
+
+        sleep: {
+            displayName: 'Sleep',
+            max: 24,
+            unit: 'hours',
+            steps : 1,
+            type : 'slider',
+            getIcons(){
+                return (
+                    <View>
+                        <FontAwesome
+                            name='bed'
+                            color={'black'}
+                            size = {35}
+                        />
+                    </View>
+                )
+            }
+        },
+
+        eat : {
+            displayName: 'Eat',
+            max: 10,
+            unit: 'rating',
+            steps : 1,
+            type : 'slider',
+            getIcons(){
+                return (
+                    <View>
+                        <MaterialCommunityIcons
+                            name='food'
+                            color={'black'}
+                            size = {35}
+                        />
+                    </View>
+                )
+            }
+        }
+
+    }
+
+    return typeof metric === 'undefined'
+        ? info
+        : info[metric]
 }
