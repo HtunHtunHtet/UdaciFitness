@@ -11,6 +11,9 @@ import {
 
 } from 'react-native'
 import AddEntry from './components/AddEntry'
+import { createStore } from 'redux'
+import { Provider } from 'react-redux'
+import reducer from './reducers'
 
 export default class App extends React.Component {
     handlePress = () => {
@@ -19,14 +22,15 @@ export default class App extends React.Component {
 
     render() {
         return (
-            <View style={styles.container}>
-                <AddEntry/>
-                {/*<TouchableOpacity
+            <Provider store={createStore(reducer)}>
+                <View style={styles.container}>
+                    <AddEntry/>
+                    {/*<TouchableOpacity
                     style={styles.btn} onPress={this.handlePress} underlayColor='#d4271b'>
                     <Text style={styles.btnText}>Touchable Highlight</Text>
                 </TouchableOpacity>*/}
 
-                {/*<Slider
+                    {/*<Slider
                     minimumValue={-10}
                     maximumValue={10}
                     step = {1}
@@ -38,14 +42,15 @@ export default class App extends React.Component {
                     Value = {this.state.value}
                 </Text>*/}
 
-            </View>
+                </View>
+            </Provider>
         )
     }
 }
 
 const styles = StyleSheet.create({
     container: {
-        marginTop:200,
+        marginTop:100,
         padding:20
     },
     btn: {
