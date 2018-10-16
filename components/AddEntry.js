@@ -1,4 +1,3 @@
-/** COMPONENT IMPORT**/
 import React, { Component } from 'react'
 import { View , TouchableOpacity, Text, Platform, StyleSheet} from 'react-native'
 import { getMetricMetaInfo,timeToString, getDailyReminderValue } from '../utils/helpers'
@@ -7,8 +6,6 @@ import {submitEntry, removeEntry } from "../utils/api";
 import { connect } from 'react-redux'
 import { addEntry } from '../actions'
 import {white,purple} from '../utils/colors'
-
-/**DEFAULT IMPORT **/
 import DateHeader from './DateHeader'
 import UdaciSlider from './UdaciSlider'
 import UdaciSteppers from './UdaciSteppers'
@@ -112,7 +109,7 @@ class AddEntry extends Component {
                     />
                     <Text>You already logged your information  for today</Text>
                     <TextButton style= {{padding:10} } onPress={this.reset}>
-                            Reset
+                            <Text>Reset</Text>
                     </TextButton>
                 </View>
             )
@@ -120,9 +117,8 @@ class AddEntry extends Component {
 
         return (
             <View style={styles.container}>
-                <DateHeader date={(new Date().toLocaleDateString())}/>
-               {/* <Text>{JSON.stringify(this.state)}</Text>*/}
 
+                <DateHeader date={(new Date().toLocaleDateString())}/>
                 {Object.keys(metaInfo).map((key) => {
                     const { getIcon, type, ...rest } = metaInfo[key]
                     const value = this.state[key]
