@@ -7,7 +7,8 @@ import {
     TouchableNativeFeedback,
     TouchableOpacity,
     TouchableWithoutFeedback,
-    Slider
+    Slider,
+    Platform
 
 } from 'react-native'
 import AddEntry from './components/AddEntry'
@@ -23,7 +24,7 @@ export default class App extends React.Component {
     render() {
         return (
             <Provider store={createStore(reducer)}>
-                <View style={styles.container}>
+                <View  style={{flex: 1}}>
                     <AddEntry/>
                     {/*<TouchableOpacity
                     style={styles.btn} onPress={this.handlePress} underlayColor='#d4271b'>
@@ -47,22 +48,3 @@ export default class App extends React.Component {
         )
     }
 }
-
-const styles = StyleSheet.create({
-    container: {
-        marginTop:100,
-        padding:20
-    },
-    btn: {
-        backgroundColor:'#E53224',
-        padding:10,
-        paddingLeft:50,
-        paddingRight:50,
-        justifyContent:'center',
-        alignItems:'center',
-        borderRadius: 5
-    },
-    btnText: {
-        color: '#fff'
-    }
-})
