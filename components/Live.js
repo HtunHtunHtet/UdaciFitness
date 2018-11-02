@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, ActivityIndicator, TouchableOpacity,StyleSheet } from 'react-native'
+import { View, Text, ActivityIndicator, TouchableOpacity,StyleSheet, Animated } from 'react-native'
 import { Foundation } from '@expo/vector-icons'
 import { purple, white } from '../utils/colors'
 import { Location, Permissions } from 'expo'
@@ -10,7 +10,9 @@ export default class Live extends Component {
         cords: null,
         status: null,
         direction: '',
-        altitude: 1, speed: 1
+        altitude: 1,
+        speed: 1,
+        bounceValue: new Animated.Value(1),
     }
 
     componentDidMount(){
@@ -50,7 +52,14 @@ export default class Live extends Component {
             distanceInterval: 1
         },  ({ coords }) =>{
             const newDirection  = calculateDirection(coords.heading)
-            const { direction } = this.state
+            const { direction, bounceValue } = this.state
+
+            if (newDirection !== direction) {
+                Animated.sequence([
+                    Animated.timing(bounceValue, { duration:200 , toValue:1.04 }),
+                    Animated.spring(bounceValue, { toValue:1 , friction:4 })
+                ]).start()
+            }
 
             this.setState(() => ({
                 coords,
@@ -61,7 +70,7 @@ export default class Live extends Component {
     }
 
     render() {
-        const {coords, status, direction} = this.state
+        const {coords, status, direction,bounceValue} = this.state
 
         if (status === null){
             return <ActivityIndicator style={{marginTop:30}} />
@@ -103,7 +112,7 @@ export default class Live extends Component {
 
                 <View style={{color: purple, fontSize: 120, textAlign:'center'}}>
                     <Text style={{fontSize: 35,  textAlign: 'center'}}>You're heading</Text>
-                    <Text style={{color: purple ,  fontSize: 120 ,textAlign: 'center'}}>{direction}</Text>
+                    <Animated.Text style={{color: purple ,  fontSize: 120 ,textAlign: 'center', transform: [{scale:bounceValue}]}}>{direction}</Animated.Text>
                 </View>
 
                 {/*Metrics*/}
