@@ -6,6 +6,7 @@ import MetricCard from './MetricCard'
 import { addEntry } from "../actions";
 import { removeEntry } from "../utils/api";
 import {timeToString , getDailyReminderValue} from "../utils/helpers";
+import TextButton from './TextButton'
 
 class EntryDetail extends Component {
 
@@ -22,6 +23,18 @@ class EntryDetail extends Component {
         }
     }
 
+    reset = () => {
+        const {remove,goBack,entryId} = this.props
+
+        remove()
+        goBack()
+        removeEntry(entryId)
+    }
+
+    shouldComponentUpdate (nextProps){
+        return nextProps.metrics !== null && !nextProps.metrics.today
+    }
+
     render(){
 
         const {metrics} = this.props
@@ -29,7 +42,11 @@ class EntryDetail extends Component {
         return(
             <View style={styles.container}>
                 <MetricCard metrics ={metrics}/>
-                <Text>Entry Details - {this.props.navigation.state.params.entryId}</Text>
+                {/*<Text>Entry Details - {this.props.navigation.state.params.entryId}</Text>*/}
+
+                <TextButton onPress={this.reset} style={{margin:20}}>
+                    RESET
+                </TextButton>
             </View>
         )
     }
@@ -62,8 +79,8 @@ function mapDispatchToProps (dispatch, { navigation }){
                         ?getDailyReminderValue()
                         : null
         })),
-        goback: () => navigation.goback()
+        goBack: () => navigation.goBack()
     }
 }
 
-export default connect(mapStateToProps)(EntryDetail)
+export default connect(mapStateToProps , mapDispatchToProps)(EntryDetail)

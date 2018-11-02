@@ -10,6 +10,7 @@ import DateHeader from './DateHeader'
 import UdaciSlider from './UdaciSlider'
 import UdaciSteppers from './UdaciSteppers'
 import TextButton from './TextButton'
+import { NavigationActions } from 'react-navigation'
 
 
 function SubmitBtn({ onPress }){
@@ -73,6 +74,7 @@ class AddEntry extends Component {
         this.setState(() => ({ run: 0, bike: 0, swim: 0, sleep: 0, eat: 0 }))
 
         // Navigate to home
+        this.toHome()
 
         // Save to "DB"
         submitEntry({key , entry})
@@ -89,9 +91,16 @@ class AddEntry extends Component {
         }))
 
         //Route To Home
+        this.toHome()
 
         //Update Db
         removeEntry(key)
+    }
+
+    toHome = () => {
+        this.props.navigation.dispatch(NavigationActions.back({
+            key: 'AddEntry'
+        }))
     }
 
     render() {
